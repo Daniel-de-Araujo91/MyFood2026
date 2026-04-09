@@ -1,0 +1,7 @@
+{
+  "usuarios": [
+    { "id": "7aa35207-f03f-4861-a7e1-af4f84524386", "nome": "Carlos", "email": "carlos@ufal.com.br", "senha": "123senha", "endereco": "Rua Exemplo N 123", "cpf": "null" }
+  ,
+    { "id": "cafe9fd9-205e-4cc3-a1b6-5b8ea464feda", "nome": "CarlosDono", "email": "carlos2@ufal.com.br", "senha": "123senha", "endereco": "Rua Exemplo N 321", "cpf": "544.732.410-68" }
+  ]
+}
