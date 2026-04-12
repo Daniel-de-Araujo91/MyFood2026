@@ -1,0 +1,11 @@
+{
+  "empresas": [
+    { "eid": "781da8ff-fd97-427f-99b5-4132123d308b", "tipoEmpresa": "restaurante", "dono": "9409ef5c-215b-4f4c-8182-96ae823772f3", "nome": "Pastelaria do Carlos", "endereco": "Rua Segura N 987", "tipoCozinha": "brasileira" }
+  ,
+    { "eid": "76771081-721f-4608-98eb-cd393313e378", "tipoEmpresa": "restaurante", "dono": "9409ef5c-215b-4f4c-8182-96ae823772f3", "nome": "Sushi do Carlos", "endereco": "Rua Legal N 654", "tipoCozinha": "japonesa" }
+  ,
+    { "eid": "c3314b66-66fa-4995-83e3-c50777cdad78", "tipoEmpresa": "restaurante", "dono": "9409ef5c-215b-4f4c-8182-96ae823772f3", "nome": "Pastelaria do Carlos", "endereco": "Rua Divertida N 1973", "tipoCozinha": "brasileira" }
+  ,
+    { "eid": "a8965306-dfbd-4bde-a9cf-d9bb28db695e", "tipoEmpresa": "restaurante", "dono": "83f011da-d757-40e4-a4ab-ab98a14ba316", "nome": "Sorveteria do Roberto", "endereco": "Rua Segura N 987", "tipoCozinha": "brasileira" }
+  ]
+}

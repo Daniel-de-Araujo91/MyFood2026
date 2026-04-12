@@ -1,4 +1,4 @@
-package br.ufal.ic.myfood.exceptions;
+package br.ufal.ic.myfood.exceptions.user;
 
 public class InvalidEmailException extends  Exception{
     public InvalidEmailException(){

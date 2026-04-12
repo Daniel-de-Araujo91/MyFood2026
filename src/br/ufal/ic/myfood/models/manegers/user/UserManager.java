@@ -1,42 +1,46 @@
-package br.ufal.ic.myfood.models.user;
+package br.ufal.ic.myfood.models.manegers.user;
 
-import br.ufal.ic.myfood.exceptions.*;
+import br.ufal.ic.myfood.exceptions.user.*;
+import br.ufal.ic.myfood.models.data.user.UserDataBase;
+import br.ufal.ic.myfood.models.master.user.User;
 
 import java.util.UUID;
 
 public class UserManager {
     private String id;
 
-    public UserManager(String nome, String email, String senha, String endereco, String cpf) throws Exception {
-        checkData(nome, email, senha, endereco, cpf);
+    public UserManager(String name, String email, String password, String address, String cpf) throws Exception {
+        checkData(name, email, password, address, cpf);
         if(cpf == null || cpf.isBlank()){
             throw new InvalidCpfFormatException();
         }
-        criarUsuario(nome, email, senha, endereco, cpf);
+        criarUsuario(name, email, password, address, cpf);
     }
-    public UserManager(String nome, String email, String senha, String endereco) throws Exception {
-        checkData(nome, email, senha, endereco, null);
-        criarUsuario(nome, email, senha, endereco, null);
+    public UserManager(String name, String email, String password, String address) throws Exception {
+        checkData(name, email, password, address, null);
+        criarUsuario(name, email, password, address, null);
+
+
     }
 
     public static String getAtributoUsuario (String id, String atributo) throws Exception{
         return UserDataBase.searchBase("id", id, atributo);
     }
 
-    public void criarUsuario(String nome, String email, String senha, String endereco,String cpf) throws Exception{
+    public void criarUsuario(String name, String email, String password, String address,String cpf) throws Exception{
         try{
             UserDataBase.searchBase("email", email,"email");
             throw new EmailRegisteredException();
 
         } catch (UserNotRegisteredException e){
             this.id = UUID.randomUUID().toString();
-            User newUser = new User(nome, email, senha, endereco, cpf);
+            User newUser = new User(name, email, password, address, cpf);
             UserDataBase.addUserBase(id, newUser);
         }
     }
 
 
-    public static String login(String email, String senha) throws Exception {
+    public static String login(String email, String password) throws Exception {
         if(email == null || email.isBlank()){
             throw new InvalidLoginExcepion();
         }else {
@@ -45,25 +49,25 @@ public class UserManager {
             }
         }
 
-        if(senha == null || senha.isBlank()){
+        if(password == null || password.isBlank()){
             throw new InvalidLoginExcepion();
         }
 
-        if(!senha.equals(UserDataBase.searchBase("email", email, "senha"))){
+        if(!password.equals(UserDataBase.searchBase("email", email, "senha"))){
             throw new InvalidLoginExcepion();
         }
 
         return UserDataBase.searchBase("email", email, "id");
     }
 
-    private void checkData(String nome, String email, String senha, String endereco, String cpf) throws Exception {
+    private void checkData(String name, String email, String password, String address, String cpf) throws Exception {
         if(cpf != null){
             if(!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")){
                 throw new InvalidCpfFormatException();
             }
         }
 
-        if(nome == null || nome.isBlank()){
+        if(name == null || name.isBlank()){
             throw new InvalidNameException();
         }
 
@@ -75,11 +79,11 @@ public class UserManager {
             }
         }
 
-        if(senha == null || senha.isBlank()){
+        if(password == null || password.isBlank()){
             throw new InvalidPasswordException();
         }
 
-        if(endereco == null || endereco.isBlank()){
+        if(address == null || address.isBlank()){
             throw new InvalidAddressException();
         }
     }

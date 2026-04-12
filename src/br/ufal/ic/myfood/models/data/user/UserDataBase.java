@@ -1,11 +1,13 @@
-package br.ufal.ic.myfood.models.user;
+package br.ufal.ic.myfood.models.data.user;
 
-import br.ufal.ic.myfood.exceptions.UserNotRegisteredException;
+import br.ufal.ic.myfood.exceptions.user.UserNotRegisteredException;
+import br.ufal.ic.myfood.models.data.master.DataBase;
+import br.ufal.ic.myfood.models.master.user.User;
 
 import java.io.*;
 import java.nio.file.*;
 
-public class UserDataBase {
+public class UserDataBase extends DataBase {
 
     private static final String Arquive = "data/user/userDataBase.json";
 
@@ -41,7 +43,7 @@ public class UserDataBase {
     public static void addUserBase(String id, User userUnregisted) throws Exception{
         String content  = readAll();
 
-        String newRegister = "    { \"id\": \"" + id + "\", \"nome\": \"" + userUnregisted.nome + "\", \"email\": \"" + userUnregisted.email + "\", \"senha\": \"" + userUnregisted.senha + "\", \"endereco\": \"" + userUnregisted.endereco + "\", \"cpf\": \"" + userUnregisted.cpf +"\" }";
+        String newRegister = "    { \"id\": \"" + id + "\", \"nome\": \"" + userUnregisted.getName() + "\", \"email\": \"" + userUnregisted.getEmail() + "\", \"senha\": \"" + userUnregisted.getPassword() + "\", \"endereco\": \"" + userUnregisted.getAddress() + "\", \"cpf\": \"" + userUnregisted.getCpf() +"\" }";
 
         int close  = content.lastIndexOf("]");
         int open   = content.indexOf("[");
@@ -97,23 +99,11 @@ public class UserDataBase {
         String block = content.substring(beginBlock, endBlock);
 
         int indexLocation = block.indexOf("\"" + resultLocation + "\"");
-        if(indexLocation == -1){
+        if(informationExtraction(block, resultLocation).isEmpty()){
             throw new UserNotRegisteredException();
         }
 
-        int after = block.indexOf(":",  indexLocation)+1;
-        while(block.charAt(after) == ' ') after++;
-
-        if(block.charAt(after) == '"'){
-            int begin = after + 1;
-            int end = block.indexOf("\"", begin);
-            return block.substring(begin, end);
-        }
-
-        int end = block.indexOf(",",  after);
-        if(end == -1)end = block.length();
-
-        return block.substring(after, end).trim();
+        return informationExtraction(block, resultLocation);
     }
 
 }
