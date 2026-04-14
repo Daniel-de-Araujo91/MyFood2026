@@ -1,5 +1,6 @@
 package br.ufal.ic.myfood.models.manegers.enterprise;
 
+import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
 import br.ufal.ic.myfood.exceptions.enterprise.EnterpriseNotRegisteredException;
 import br.ufal.ic.myfood.exceptions.enterprise.InvalidEnterpriseAttributeException;
 import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
@@ -17,6 +18,7 @@ public class EnterpriseManager {
         String eId = UUID.randomUUID().toString();
 
         if(enterpriseType.equals("restaurante")){
+
             RestaurantManeger.checkData(owner, name, address, particulars);
             Restaurant newRestaurant = new Restaurant(enterpriseType,owner,name, address, particulars);
             RestaurantDataBase.addToBase(eId, newRestaurant);
@@ -29,10 +31,11 @@ public class EnterpriseManager {
     }
 
     public static String getEnterpriseAttribute(String eid, String attribute) throws Exception{
-        if(EnterpriseDataBase.searchBase("eid", eid, "eid", 0, "attribute").isEmpty()){
+        try{
+            EnterpriseDataBase.searchBase("eid", eid, "eid", 0, "attribute");
+        }catch (DataNotFoundException e){
             throw new EnterpriseNotRegisteredException();
         }
-
         String enterpriseType = EnterpriseDataBase.searchBase("eid", eid, "tipoEmpresa", 0, "attribute");
 
         if(enterpriseType.equals("restaurante")){
@@ -47,7 +50,7 @@ public class EnterpriseManager {
 
         if(attribute.equals("dono")){
             String idOwner = EnterpriseDataBase.searchBase("eid", eid, attribute,0,"attribute");
-            return UserDataBase.searchBase("id", idOwner, "nome");
+            return UserDataBase.searchBase("id", idOwner, "nome", 0,"attribute");
         }
 
         String result = EnterpriseDataBase.searchBase("eid", eid, attribute,0,"attribute");

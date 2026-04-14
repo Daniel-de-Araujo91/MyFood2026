@@ -1,5 +1,6 @@
 package br.ufal.ic.myfood.models.manegers.user;
 
+import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
 import br.ufal.ic.myfood.exceptions.user.*;
 import br.ufal.ic.myfood.models.data.user.UserDataBase;
 import br.ufal.ic.myfood.models.master.user.User;
@@ -24,15 +25,20 @@ public class UserManager {
     }
 
     public static String getAtributoUsuario (String id, String atributo) throws Exception{
-        return UserDataBase.searchBase("id", id, atributo);
+        try{
+            return UserDataBase.searchBase("id", id, atributo, 0,"attribute");
+        }catch(DataNotFoundException e){
+            throw new UserNotRegisteredException();
+        }
+
     }
 
     public void criarUsuario(String name, String email, String password, String address,String cpf) throws Exception{
         try{
-            UserDataBase.searchBase("email", email,"email");
+            UserDataBase.searchBase("email", email,"email", 0,"attribute");
             throw new EmailRegisteredException();
 
-        } catch (UserNotRegisteredException e){
+        } catch (DataNotFoundException e){
             this.id = UUID.randomUUID().toString();
             User newUser = new User(name, email, password, address, cpf);
             UserDataBase.addUserBase(id, newUser);
@@ -53,11 +59,11 @@ public class UserManager {
             throw new InvalidLoginExcepion();
         }
 
-        if(!password.equals(UserDataBase.searchBase("email", email, "senha"))){
+        if(!password.equals(UserDataBase.searchBase("email", email, "senha", 0,"attribute"))){
             throw new InvalidLoginExcepion();
         }
 
-        return UserDataBase.searchBase("email", email, "id");
+        return UserDataBase.searchBase("email", email, "id", 0,"attribute");
     }
 
     private void checkData(String name, String email, String password, String address, String cpf) throws Exception {

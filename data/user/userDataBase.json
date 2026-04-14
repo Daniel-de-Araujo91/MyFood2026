@@ -1,9 +1,5 @@
 {
   "usuarios": [
-    { "id": "8363e993-2bed-488e-a513-b51a333fe165", "nome": "Lucas", "email": "lucas@ufal.com.br", "senha": "123senha", "endereco": "Rua Exemplo N 321", "cpf": "null" }
-  ,
-    { "id": "30bde289-1334-4bcc-82f6-f73b7df490ab", "nome": "CarlosDono", "email": "carlos@ufal.com.br", "senha": "123senha", "endereco": "Rua Exemplo N 321", "cpf": "544.732.410-68" }
-  ,
-    { "id": "c688852b-71c4-49ca-9f7f-8114e5c0191b", "nome": "RobertoDono", "email": "roberto@ufal.com.br", "senha": "123senha", "endereco": "Rua Exemplo N 321", "cpf": "544.732.410-68" }
+    { "id": "7ac8431c-6599-41d0-86dc-5072b92f3673", "nome": "RobertoDono", "email": "roberto@ufal.com.br", "senha": "123senha", "endereco": "Rua Exemplo N 321", "cpf": "544.732.410-68" }
   ]
 }

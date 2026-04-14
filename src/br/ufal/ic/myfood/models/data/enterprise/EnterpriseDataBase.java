@@ -2,6 +2,7 @@ package br.ufal.ic.myfood.models.data.enterprise;
 
 
 
+import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
 import br.ufal.ic.myfood.exceptions.enterprise.EnterpriseNameNotExistException;
 import br.ufal.ic.myfood.exceptions.enterprise.IndexMoreExpectedException;
 import br.ufal.ic.myfood.exceptions.enterprise.InvalidIndexException;
@@ -19,79 +20,46 @@ public class EnterpriseDataBase extends DataBase {
 
     private static final String Arquive = "data/enterprise/enterpriseDataBase.json";
 
-    public static void createEnterpriseBase(String json) throws Exception{
-        File f = new File(Arquive);
-
-        File pasta = f.getParentFile();
-            if ((pasta != null && !pasta.exists()) || json.isEmpty()) {
-                assert pasta != null;
-                pasta.mkdirs();
-                createEnterpriseBase("{\n  \"empresas\": []\n}");
-            }else{
-                FileWriter writer  = new FileWriter(Arquive);
-                writer.write(json);
-                writer.close();
-            }
-
-
+    public static String getArquive() {
+        return Arquive;
     }
 
-    public static String readAll() throws Exception{
-        File f = new File(Arquive);
+    public static void createEnterpriseBase(String json) throws Exception{
+            if (json.isEmpty()) {
+                createDataBase("{\n  \"empresas\": []\n}", Arquive);
+            }else{
+                createDataBase(json, Arquive);
+            }
+    }
 
-        File pasta = f.getParentFile();
-        if (pasta != null && !pasta.exists()) {
-            pasta.mkdirs();
-        }
-
-        if (!f.exists() || f.length() == 0) {
-            createEnterpriseBase("{\n  \"empresas\": []\n}");
-        }
-
-        return new String(Files.readAllBytes(Paths.get(Arquive)));
-
+    public static String EntepriseReadAll() throws Exception{
+        return readAll("{\n  \"empresas\": []\n}", Arquive);
     }
 
 
 
     public static String searchBase(String keyLocation, String key, String resultLocation, int searchStart, String searchType) throws Exception{
-        String content = readAll();
+        String content = readAll("{\n  \"empresas\": []\n}", Arquive);
 
-        String target = "\"" + keyLocation + "\": \"" + key + "\"";
-        int index = content.indexOf(target, searchStart);
-
-        if(index == -1){
-            return "";
-        }
-
-        int beginBlock = content.lastIndexOf("{",  index);
-        int endBlock = content.indexOf("}",  index);
-        String block = content.substring(beginBlock, endBlock);
-
-        if(searchType.equals("block")){
-            return block;
-        }
-        if(searchType.equals("cycle")){
-            return String.valueOf(endBlock);
-        }
-
-        return informationExtraction(block, resultLocation);
+        return searchBase(content, keyLocation, key, resultLocation, searchStart, searchType);
     }
 
 
 
     public static String getEnterpriseByUser(String id) throws Exception {
-        if(UserDataBase.searchBase("id", id, "cpf").equals("null")){
+        if(UserDataBase.searchBase("id", id, "cpf", 0, "attribute").equals("null")){
             throw new NotOwnerException();
         }
 
         String result ="{[";
         int searchStart = 0;
+        String block = "";
         while(true){
-          String block  = searchBase("dono", id, null, searchStart,"block");
-          if(block.isEmpty()){
-              break;
-          }
+        try {
+            block = searchBase("dono", id, null, searchStart, "block");
+        }catch (DataNotFoundException e){
+            break;
+        }
           result +=  "[" + informationExtraction(block, "nome")+", ";
           result += informationExtraction(block, "endereco") +"], ";
 
@@ -112,8 +80,9 @@ public class EnterpriseDataBase extends DataBase {
         if(name == null || name.isBlank()){
             throw new InvalidNameException();
         }
-
-        if(searchBase("nome", name , "nome", searchStart,"attribute").isEmpty()){
+        try{
+            searchBase("nome", name , "nome", searchStart,"attribute");
+        }catch (DataNotFoundException e){
             throw new EnterpriseNameNotExistException();
         }
 
@@ -124,6 +93,13 @@ public class EnterpriseDataBase extends DataBase {
         String check = "";
         int i = 0;
         while(i <= index){
+
+            try {
+                searchBase("dono", owner, null, searchStart, "cycle");
+            }catch (DataNotFoundException e){
+                throw new IndexMoreExpectedException();
+            }
+
             if(owner.equals(searchBase("dono", owner, "dono", searchStart, "attribute")) && name.equals(searchBase("dono", owner, "nome", searchStart, "attribute"))){
 
                 if(index != 0 && i != index){
