@@ -1,9 +1,0 @@
-{
-  "produto": [
-    { "pid": "b1ddc549-3fb7-4cbc-8c5a-85c566fb6c66", "empresa": "b5b06e58-f540-4c66-9c7a-e53be818acb3", "nome": "Sorvete morango", "valor": "1.40", "categoria": "alimento" }
-  ,
-    { "pid": "c3ea1202-c350-431f-9f14-76c2961412ea", "empresa": "b5b06e58-f540-4c66-9c7a-e53be818acb3", "nome": "Refrigerante", "valor": "3.00", "categoria": "bebida" }
-  ,
-    { "pid": "267bff8c-2c17-457e-9ec0-b513cb6e393a", "empresa": "a1b7a809-91e1-4637-82c2-50a7abd4828d", "nome": "Refrigerante de laranja", "valor": "4.40", "categoria": "bebida" }
-  ]
-}

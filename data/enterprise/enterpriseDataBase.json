@@ -1,9 +1,0 @@
-{
-  "empresas": [
-    { "eid": "b5b06e58-f540-4c66-9c7a-e53be818acb3", "tipoEmpresa": "restaurante", "dono": "7ac8431c-6599-41d0-86dc-5072b92f3673", "nome": "Sorveteria do Roberto", "endereco": "Rua Segura N 987", "tipoCozinha": "brasileira" }
-  ,
-    { "eid": "a1b7a809-91e1-4637-82c2-50a7abd4828d", "tipoEmpresa": "restaurante", "dono": "7ac8431c-6599-41d0-86dc-5072b92f3673", "nome": "Pastelaria do Roberto", "endereco": "Rua Segura N 987", "tipoCozinha": "brasileira" }
-  ,
-    { "eid": "0f523d37-2f72-44c6-b73d-b5ed929260a3", "tipoEmpresa": "restaurante", "dono": "7ac8431c-6599-41d0-86dc-5072b92f3673", "nome": "Churrascaria do Roberto", "endereco": "Rua Segura N 987", "tipoCozinha": "brasileira" }
-  ]
-}

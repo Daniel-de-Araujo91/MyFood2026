@@ -1,5 +1,0 @@
-{
-  "usuarios": [
-    { "id": "7ac8431c-6599-41d0-86dc-5072b92f3673", "nome": "RobertoDono", "email": "roberto@ufal.com.br", "senha": "123senha", "endereco": "Rua Exemplo N 321", "cpf": "544.732.410-68" }
-  ]
-}
