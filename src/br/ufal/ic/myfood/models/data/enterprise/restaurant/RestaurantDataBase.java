@@ -1,7 +1,7 @@
 package br.ufal.ic.myfood.models.data.enterprise.restaurant;
 
 
-import br.ufal.ic.myfood.exceptions.enterprise.NameEnterpriseRegisteredException;
+
 import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
 import br.ufal.ic.myfood.models.master.enterprise.restaurant.Restaurant;
 

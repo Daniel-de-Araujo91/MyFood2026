@@ -4,7 +4,6 @@ package br.ufal.ic.myfood.models.data.master;
 
 
 import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
-import br.ufal.ic.myfood.exceptions.enterprise.NameEnterpriseRegisteredException;
 
 import java.io.File;
 import java.io.FileWriter;

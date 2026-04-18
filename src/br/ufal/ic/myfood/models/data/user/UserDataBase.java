@@ -1,10 +1,8 @@
 package br.ufal.ic.myfood.models.data.user;
 
-import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
-import br.ufal.ic.myfood.exceptions.user.UserNotRegisteredException;
+
 import br.ufal.ic.myfood.models.data.master.DataBase;
 import br.ufal.ic.myfood.models.master.user.User;
-
 import java.io.*;
 import java.nio.file.*;
 

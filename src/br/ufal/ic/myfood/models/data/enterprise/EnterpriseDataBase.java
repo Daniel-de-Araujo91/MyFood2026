@@ -11,11 +11,6 @@ import br.ufal.ic.myfood.exceptions.user.InvalidNameException;
 import br.ufal.ic.myfood.models.data.master.DataBase;
 import br.ufal.ic.myfood.models.data.user.UserDataBase;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 public class EnterpriseDataBase extends DataBase {
 
     private static final String Arquive = "data/enterprise/enterpriseDataBase.json";

@@ -2,11 +2,8 @@ package br.ufal.ic.myfood.models.data.product;
 
 import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
 import br.ufal.ic.myfood.exceptions.enterprise.EnterpriseNotFoundException;
-import br.ufal.ic.myfood.exceptions.enterprise.NotOwnerException;
-import br.ufal.ic.myfood.exceptions.user.UserNotRegisteredException;
 import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
 import br.ufal.ic.myfood.models.data.master.DataBase;
-import br.ufal.ic.myfood.models.data.user.UserDataBase;
 import br.ufal.ic.myfood.models.master.product.Product;
 
 

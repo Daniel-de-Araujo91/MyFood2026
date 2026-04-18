@@ -9,8 +9,8 @@ import br.ufal.ic.myfood.models.data.user.UserDataBase;
 import br.ufal.ic.myfood.models.manegers.enterprise.restaurant.RestaurantManeger;
 import br.ufal.ic.myfood.models.master.enterprise.restaurant.Restaurant;
 
-import java.util.UUID;
 
+import java.util.UUID;
 public class EnterpriseManager {
 
 
