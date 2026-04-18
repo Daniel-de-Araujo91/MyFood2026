@@ -9,6 +9,5 @@ public class Main {
                 EasyAccept.main(new String[] {"br.ufal.ic.myfood.Facade", "tests/us"+i+"_"+j+".txt"});
             }
         }
-
     }
 }
