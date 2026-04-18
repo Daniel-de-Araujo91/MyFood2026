@@ -126,7 +126,6 @@ public class EnterpriseDataBase extends DataBase {
         }
 
 
-        String teste = searchBase("dono", owner, "eid", searchStart, "attribute");
         return searchBase("dono", owner, "eid", searchStart, "attribute");
 
     }

@@ -12,7 +12,6 @@ import java.util.UUID;
 public class ProductManeger {
     public static String createProduct(String enterpriseId, String name, String value, String category) throws Exception {
         try {
-            String teate =(ProductDataBase.searchBase("nome",name,"empresa", 0,"attribute"));
             if(enterpriseId.equals(ProductDataBase.searchBase("nome",name,"empresa", 0,"attribute"))){
                 throw new ProductNameRegisteredException();
             }

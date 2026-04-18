@@ -49,13 +49,18 @@ public class DataBase {
         if(indexLocation == -1){
             return "";
         }
-        int after = block.indexOf(":", indexLocation)+1;
+        int after = block.indexOf(":", indexLocation) +1;
         while(block.charAt(after) == ' ') after++;
 
         if(block.charAt(after) == '"'){
             int begin = after + 1;
             int end = block.indexOf("\"", begin);
             return block.substring(begin, end);
+        }
+
+        if (block.charAt(after) == '[') {
+            int end = block.indexOf("]", after) + 1;
+            return block.substring(after, end);
         }
 
         int end = block.indexOf(",",  after);

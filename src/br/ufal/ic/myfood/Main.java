@@ -4,15 +4,11 @@ import easyaccept.EasyAccept;
 
 public class Main {
     public static void main(String[] args) {
-        EasyAccept.main(new String[] {"br.ufal.ic.myfood.Facade", "tests/us1_1.txt"});
-        EasyAccept.main(new String[] {"br.ufal.ic.myfood.Facade", "tests/us1_2.txt"});
-        EasyAccept.main(new String[] {"br.ufal.ic.myfood.Facade", "tests/us2_1.txt"});
-        EasyAccept.main(new String[] {"br.ufal.ic.myfood.Facade", "tests/us2_2.txt"});
-        EasyAccept.main(new String[] {"br.ufal.ic.myfood.Facade", "tests/us3_1.txt"});
-        EasyAccept.main(new String[] {"br.ufal.ic.myfood.Facade", "tests/us3_2.txt"});
-
-
-//       EasyAccept.main(new String[] {"br.ufal.ic.myfood.Facade", "tests/"});
+        for(int i = 1; i <= 4; i++) {
+            for(int j = 1; j <= 2; j++) {
+                EasyAccept.main(new String[] {"br.ufal.ic.myfood.Facade", "tests/us"+i+"_"+j+".txt"});
+            }
+        }
 
     }
 }

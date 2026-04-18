@@ -1,9 +1,11 @@
 package br.ufal.ic.myfood;
 
 import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
+import br.ufal.ic.myfood.models.data.order.OrderDataBase;
 import br.ufal.ic.myfood.models.data.product.ProductDataBase;
 import br.ufal.ic.myfood.models.data.user.UserDataBase;
 import br.ufal.ic.myfood.models.manegers.enterprise.EnterpriseManager;
+import br.ufal.ic.myfood.models.manegers.order.OrderManeger;
 import br.ufal.ic.myfood.models.manegers.product.ProductManeger;
 import br.ufal.ic.myfood.models.manegers.user.UserManager;
 
@@ -13,6 +15,7 @@ public class Facade {
         UserDataBase.createUserBase("");
         EnterpriseDataBase.createEnterpriseBase("");
         ProductDataBase.createProductBase("");
+        OrderDataBase.createOrderBase("");
     }
 
     public String getAtributoUsuario(String id , String atributo) throws Exception {
@@ -60,6 +63,30 @@ public class Facade {
 
     public String listarProdutos(String enterpriseId) throws Exception {
         return ProductDataBase.getProductsByEnterprise(enterpriseId);
+    }
+
+    public String criarPedido(String userId, String enterpriseId) throws Exception {
+        return OrderManeger.createOrder(userId, enterpriseId);
+    }
+
+    public void adicionarProduto(String oid,String newProduct) throws Exception {
+        OrderManeger.addProductToOrder(oid, newProduct);
+    }
+
+    public String getPedidos(String oid, String attribute) throws Exception {
+        return OrderManeger.getOrder(oid, attribute);
+    }
+
+    public void fecharPedido(String oid) throws Exception {
+        OrderManeger.closeOrder(oid);
+    }
+
+    public void  removerProduto(String oid, String product) throws Exception {
+        OrderManeger.removeProduct(oid, product);
+    }
+
+    public String  getNumeroPedido(String userId, String enterpriseId, int index) throws Exception {
+        return OrderDataBase.getOrderNumber(userId,enterpriseId,index);
     }
 
     public void encerrarSistema(){}
