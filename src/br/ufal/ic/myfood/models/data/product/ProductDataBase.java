@@ -4,7 +4,7 @@ import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
 import br.ufal.ic.myfood.exceptions.enterprise.EnterpriseNotFoundException;
 import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
 import br.ufal.ic.myfood.models.data.master.DataBase;
-import br.ufal.ic.myfood.models.master.product.Product;
+import br.ufal.ic.myfood.models.entity.product.Product;
 
 
 public class ProductDataBase extends DataBase {

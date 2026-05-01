@@ -70,6 +70,10 @@ public class EnterpriseDataBase extends DataBase {
     }
 
     public static String getIdEnterprise(String owner, String name, int index) throws Exception {
+        if(index < 0){
+            throw new InvalidIndexException();
+        }
+
         int searchStart = 0;
 
         if(name == null || name.isBlank()){
@@ -81,9 +85,7 @@ public class EnterpriseDataBase extends DataBase {
             throw new EnterpriseNameNotExistException();
         }
 
-        if(index < 0){
-            throw new InvalidIndexException();
-        }
+
 
         String check = "";
         int i = 0;
@@ -125,4 +127,37 @@ public class EnterpriseDataBase extends DataBase {
 
     }
 
+    public static void editValue(String eid, String newValue, String location) throws Exception{
+        String content = EntepriseReadAll();
+
+        String target = "\"" + eid + "\"";
+        int indexId = content.indexOf(target);
+        if(indexId == -1){
+            throw  new DataNotFoundException();
+        }
+
+        int beginBlock = content.lastIndexOf("{",  indexId);
+        int endBlock = content.indexOf("}",  indexId);
+        String block = content.substring(beginBlock, endBlock);
+
+        int indexLocation = block.indexOf("\"" + location+ "\"");
+        if(informationExtraction(block,location).isEmpty()){
+            throw new DataNotFoundException();
+        }
+
+        int after = block.indexOf(":", indexLocation)+1;
+        while(block.charAt(after) == ' ') after++;
+
+
+        int begin = after + 1;
+        int end = block.indexOf("\"", begin);
+        String value = "\"" + newValue + "\"";
+
+
+        String newBlock = block.substring(0, begin) + newValue + block.substring(end) ;
+
+        String newContent = content.substring(0, beginBlock) + newBlock + content.substring(endBlock);
+
+        createDataBase(newContent,Arquive);
+    }
 }

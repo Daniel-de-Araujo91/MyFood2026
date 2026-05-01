@@ -2,9 +2,7 @@ package br.ufal.ic.myfood.models.data.user;
 
 
 import br.ufal.ic.myfood.models.data.master.DataBase;
-import br.ufal.ic.myfood.models.master.user.User;
-import java.io.*;
-import java.nio.file.*;
+import br.ufal.ic.myfood.models.entity.user.User;
 
 public class UserDataBase extends DataBase {
 

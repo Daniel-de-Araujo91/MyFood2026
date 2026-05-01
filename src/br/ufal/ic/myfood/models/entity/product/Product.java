@@ -1,4 +1,4 @@
-package br.ufal.ic.myfood.models.master.product;
+package br.ufal.ic.myfood.models.entity.product;
 
 public class Product {
     private String enterpriseId;

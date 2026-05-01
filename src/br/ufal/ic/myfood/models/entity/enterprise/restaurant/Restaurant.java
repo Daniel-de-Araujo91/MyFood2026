@@ -1,4 +1,4 @@
-package br.ufal.ic.myfood.models.master.enterprise.restaurant;
+package br.ufal.ic.myfood.models.entity.enterprise.restaurant;
 
 public class Restaurant {
     private String enterpriseType;

@@ -4,7 +4,7 @@ import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
 import br.ufal.ic.myfood.exceptions.enterprise.IndexMoreExpectedException;
 import br.ufal.ic.myfood.exceptions.enterprise.InvalidIndexException;
 import br.ufal.ic.myfood.models.data.master.DataBase;
-import br.ufal.ic.myfood.models.master.order.Order;
+import br.ufal.ic.myfood.models.entity.order.Order;
 
 
 public class OrderDataBase extends DataBase {

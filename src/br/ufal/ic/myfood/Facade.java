@@ -33,9 +33,15 @@ public class Facade {
         return UserManager.login(email, senha);
     }
 
+    public String criarEmpresa(String enterpriseType, String owner, String name, String address, String openHour, String closeHour, String particulars)throws Exception {
+        return EnterpriseManager.createEnterprise(enterpriseType,owner,name, address,openHour,closeHour,particulars);
+    }
+
     public String criarEmpresa(String enterpriseType, String owner, String name, String address, String particulars) throws Exception {
         return EnterpriseManager.createEnterprise(enterpriseType,owner,name, address, particulars);
     }
+
+
 
     public String getEmpresasDoUsuario (String idOwner) throws Exception {
         return EnterpriseDataBase.getEnterpriseByUser(idOwner);
@@ -87,6 +93,10 @@ public class Facade {
 
     public String  getNumeroPedido(String userId, String enterpriseId, int index) throws Exception {
         return OrderDataBase.getOrderNumber(userId,enterpriseId,index);
+    }
+
+    public void alterarFuncionamento(String enterpriseId, String openHour, String closeHour) throws Exception {
+        EnterpriseManager.alterHour(enterpriseId, openHour, closeHour);
     }
 
     public void encerrarSistema(){}

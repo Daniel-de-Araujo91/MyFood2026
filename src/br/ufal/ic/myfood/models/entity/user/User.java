@@ -1,4 +1,4 @@
-package br.ufal.ic.myfood.models.master.user;
+package br.ufal.ic.myfood.models.entity.user;
 
 public class User {
     private String name;

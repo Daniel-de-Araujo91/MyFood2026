@@ -5,7 +5,7 @@ import br.ufal.ic.myfood.exceptions.product.*;
 import br.ufal.ic.myfood.exceptions.user.InvalidNameException;
 import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
 import br.ufal.ic.myfood.models.data.product.ProductDataBase;
-import br.ufal.ic.myfood.models.master.product.Product;
+import br.ufal.ic.myfood.models.entity.product.Product;
 
 import java.util.UUID;
 

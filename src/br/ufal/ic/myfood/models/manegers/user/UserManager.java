@@ -3,7 +3,7 @@ package br.ufal.ic.myfood.models.manegers.user;
 import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
 import br.ufal.ic.myfood.exceptions.user.*;
 import br.ufal.ic.myfood.models.data.user.UserDataBase;
-import br.ufal.ic.myfood.models.master.user.User;
+import br.ufal.ic.myfood.models.entity.user.User;
 
 import java.util.UUID;
 

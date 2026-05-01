@@ -3,7 +3,7 @@ package br.ufal.ic.myfood.models.data.enterprise.restaurant;
 
 
 import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
-import br.ufal.ic.myfood.models.master.enterprise.restaurant.Restaurant;
+import br.ufal.ic.myfood.models.entity.enterprise.restaurant.Restaurant;
 
 public class RestaurantDataBase extends EnterpriseDataBase {
 

@@ -6,7 +6,7 @@ import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
 import br.ufal.ic.myfood.models.data.order.OrderDataBase;
 import br.ufal.ic.myfood.models.data.product.ProductDataBase;
 import br.ufal.ic.myfood.models.data.user.UserDataBase;
-import br.ufal.ic.myfood.models.master.order.Order;
+import br.ufal.ic.myfood.models.entity.order.Order;
 
 
 import java.util.UUID;

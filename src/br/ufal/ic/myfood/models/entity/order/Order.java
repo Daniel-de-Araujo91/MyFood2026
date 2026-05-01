@@ -1,4 +1,4 @@
-package br.ufal.ic.myfood.models.master.order;
+package br.ufal.ic.myfood.models.entity.order;
 
 public class Order {
     private String user;
