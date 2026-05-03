@@ -3,17 +3,13 @@ package br.ufal.ic.myfood.models.manegers.enterprise;
 import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
 import br.ufal.ic.myfood.exceptions.enterprise.*;
 import br.ufal.ic.myfood.exceptions.enterprise.market.InvalidMarketException;
-import br.ufal.ic.myfood.exceptions.product.InvalidProductAttributeException;
-import br.ufal.ic.myfood.exceptions.user.InvalidAddressException;
 import br.ufal.ic.myfood.exceptions.user.InvalidNameException;
-import br.ufal.ic.myfood.exceptions.user.UserNotRegisteredException;
 import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
 import br.ufal.ic.myfood.models.data.enterprise.market.MarketDataBase;
 import br.ufal.ic.myfood.models.data.enterprise.restaurant.RestaurantDataBase;
 import br.ufal.ic.myfood.models.data.user.UserDataBase;
 import br.ufal.ic.myfood.models.entity.enterprise.market.Market;
 import br.ufal.ic.myfood.models.manegers.enterprise.market.MarketManeger;
-import br.ufal.ic.myfood.models.manegers.enterprise.restaurant.RestaurantManeger;
 import br.ufal.ic.myfood.models.entity.enterprise.restaurant.Restaurant;
 
 
@@ -23,10 +19,7 @@ import static java.lang.Integer.parseInt;
 
 public class EnterpriseManager {
 
-
-
-
-    public static String createEnterprise(String enterpriseType, String owner, String name, String address, String openHour, String closeHour, String particulars) throws Exception {
+    public static String createEnterprise(String enterpriseType, String owner, String name, String address, String thirdParticulars, String secondParticulars, String firstParticulars) throws Exception {
         String eId = UUID.randomUUID().toString();
 
 
@@ -34,24 +27,32 @@ public class EnterpriseManager {
 
         if(enterpriseType.equals("restaurante")){
             checkRequirement(owner, name, address);
-            Restaurant newRestaurant = new Restaurant(enterpriseType,owner,name, address, particulars);
+            Restaurant newRestaurant = new Restaurant(enterpriseType,owner,name, address, firstParticulars);
             RestaurantDataBase.addToBase(eId, newRestaurant);
         }
-        else{
-            checkHour(openHour, closeHour);
-            if(enterpriseType.equals("mercado")){
-                MarketManeger.checkData(particulars);
-                checkRequirement(owner, name, address);
-                Market newMarket = new Market(enterpriseType,owner,name, address, openHour, closeHour, particulars);
-                MarketDataBase.addToBase(eId, newMarket);
-            }
+        else if(enterpriseType.equals("mercado")){
+            checkHour(thirdParticulars, secondParticulars);
+            MarketManeger.checkData(firstParticulars);
+            checkRequirement(owner, name, address);
+            Market newMarket = new Market(enterpriseType,owner,name, address, thirdParticulars, secondParticulars, firstParticulars);
+            MarketDataBase.addToBase(eId, newMarket);
         }
+        else if(enterpriseType.equals("farmacia")){
+            checkRequirement(owner, name, address);
+        }
+
         return eId;
+    }
+
+    public static String createEnterprise(String enterpriseType, String owner, String name, String address,  String secondParticulars, String firstParticulars) throws Exception {
+        return createEnterprise(enterpriseType, owner, name, address,null,secondParticulars, firstParticulars);
     }
 
     public static String createEnterprise(String enterpriseType, String owner, String name, String address, String particulars) throws Exception {
        return createEnterprise(enterpriseType, owner, name, address, null, null, particulars);
     }
+
+
 
 
     public static String getEnterpriseAttribute(String eid, String attribute) throws Exception{

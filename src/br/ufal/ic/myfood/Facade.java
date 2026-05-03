@@ -21,10 +21,11 @@ public class Facade {
     public String getAtributoUsuario(String id , String atributo) throws Exception {
        return UserManager.getAtributoUsuario(id, atributo);
     }
-
+    /**Create User**/
     public void criarUsuario(String name, String email, String senha, String endereco) throws Exception {
         new UserManager(name, email, senha, endereco);
     }
+    /**Create Owner**/
     public void criarUsuario(String name, String email, String senha, String endereco, String cpf) throws Exception {
         new UserManager(name, email, senha, endereco, cpf);
     }
@@ -33,10 +34,16 @@ public class Facade {
         return UserManager.login(email, senha);
     }
 
-    public String criarEmpresa(String enterpriseType, String owner, String name, String address, String openHour, String closeHour, String particulars)throws Exception {
-        return EnterpriseManager.createEnterprise(enterpriseType,owner,name, address,openHour,closeHour,particulars);
+    /**Create Market**/
+    public String criarEmpresa(String enterpriseType, String owner, String name, String address, String thirdParticulars, String secondParticulars, String firstParticulars)throws Exception {
+        return EnterpriseManager.createEnterprise(enterpriseType,owner,name, address,thirdParticulars,secondParticulars,firstParticulars);
+    }
+    /**Create Pharmacy**/
+    public String criarEmpresa(String enterpriseType, String owner, String name, String address,  boolean secondParticulars, String firstParticulars)throws Exception {
+        return EnterpriseManager.createEnterprise(enterpriseType,owner,name, address, String.valueOf(secondParticulars),firstParticulars);
     }
 
+    /**Create Restaurant**/
     public String criarEmpresa(String enterpriseType, String owner, String name, String address, String particulars) throws Exception {
         return EnterpriseManager.createEnterprise(enterpriseType,owner,name, address, particulars);
     }
