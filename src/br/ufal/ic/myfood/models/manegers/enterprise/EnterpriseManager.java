@@ -6,9 +6,11 @@ import br.ufal.ic.myfood.exceptions.enterprise.market.InvalidMarketException;
 import br.ufal.ic.myfood.exceptions.user.InvalidNameException;
 import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
 import br.ufal.ic.myfood.models.data.enterprise.market.MarketDataBase;
+import br.ufal.ic.myfood.models.data.enterprise.pharmacy.PharmacyDataBase;
 import br.ufal.ic.myfood.models.data.enterprise.restaurant.RestaurantDataBase;
 import br.ufal.ic.myfood.models.data.user.UserDataBase;
 import br.ufal.ic.myfood.models.entity.enterprise.market.Market;
+import br.ufal.ic.myfood.models.entity.enterprise.pharmacy.Pharmacy;
 import br.ufal.ic.myfood.models.manegers.enterprise.market.MarketManeger;
 import br.ufal.ic.myfood.models.entity.enterprise.restaurant.Restaurant;
 
@@ -32,13 +34,15 @@ public class EnterpriseManager {
         }
         else if(enterpriseType.equals("mercado")){
             checkHour(thirdParticulars, secondParticulars);
-            MarketManeger.checkData(firstParticulars);
+            MarketManeger.checkData(firstParticulars);//
             checkRequirement(owner, name, address);
             Market newMarket = new Market(enterpriseType,owner,name, address, thirdParticulars, secondParticulars, firstParticulars);
             MarketDataBase.addToBase(eId, newMarket);
         }
         else if(enterpriseType.equals("farmacia")){
             checkRequirement(owner, name, address);
+            Pharmacy newPharmacy = new Pharmacy(enterpriseType, owner, name, address, secondParticulars, firstParticulars);
+            PharmacyDataBase.addToBase(eId, newPharmacy);
         }
 
         return eId;
@@ -62,16 +66,21 @@ public class EnterpriseManager {
             throw new EnterpriseNotRegisteredException();
         }
         String enterpriseType = EnterpriseDataBase.searchBase("eid", eid, "tipoEmpresa", 0, "attribute");
-        String listAttribute = "{[tipoEmpresa], [dono], [nome], [endereco], [abre], [fecha]";
+        String listAttribute = "{[tipoEmpresa], [dono], [nome], [endereco]";
         if(enterpriseType.equals("restaurante")){
-            listAttribute += ",[tipoCozinha]}";
+            listAttribute += ", [tipoCozinha]}";
 
             if( attribute == null || attribute.trim().isEmpty() || !listAttribute.contains(attribute)) {
                 throw new InvalidEnterpriseAttributeException();
             }
-        }if(enterpriseType.equals("mercado")){
-            listAttribute += ",[tipoMercado]}";
+        }else if(enterpriseType.equals("mercado")){
+            listAttribute += ", [abre], [fecha],[tipoMercado]}";
             if( attribute == null || attribute.trim().isEmpty() || !listAttribute.contains(attribute)) {
+                throw new InvalidEnterpriseAttributeException();
+            }
+        }else if(enterpriseType.equals("farmacia")) {
+            listAttribute += ", [aberto24Horas], [numeroFuncionarios]}";
+            if (attribute == null || attribute.trim().isEmpty() || !listAttribute.contains(attribute)) {
                 throw new InvalidEnterpriseAttributeException();
             }
         }
@@ -127,7 +136,7 @@ public class EnterpriseManager {
         }catch(DataNotFoundException e){}
 
         try{
-            if(owner.equals(EnterpriseDataBase.searchBase("dono", owner, "dono", 0, "attribute")) && address.equals(EnterpriseDataBase.searchBase("endereco", address, "endereco", 0, "attribute")) && name.equals(EnterpriseDataBase.searchBase("endereco", address, "nome", 0, "attribute"))){
+            if(owner.equals(EnterpriseDataBase.searchBase("nome", name, "dono", 0, "attribute")) && address.equals(EnterpriseDataBase.searchBase("nome", name, "endereco", 0, "attribute")) ){
                 throw new NameAndAddressRegisteredException();
             }
         }catch(DataNotFoundException e){}

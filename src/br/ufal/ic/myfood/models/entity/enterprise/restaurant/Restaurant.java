@@ -1,34 +1,13 @@
 package br.ufal.ic.myfood.models.entity.enterprise.restaurant;
 
-public class Restaurant {
-    private String enterpriseType;
-    private String owner;
-    private String name;
-    private String address;
+import br.ufal.ic.myfood.models.entity.enterprise.Enterprise;
+
+public class Restaurant extends Enterprise {
     private String kitchenType;
 
     public Restaurant(String enterpriseType, String owner, String name, String address, String kitchenType) {
-        this.enterpriseType = enterpriseType;
-        this.owner = owner;
-        this.name = name;
-        this.address = address;
+        super(enterpriseType, owner, name, address);
         this.kitchenType = kitchenType;
-    }
-
-    public String getEnterpriseType() {
-        return enterpriseType;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAddress() {
-        return address;
     }
 
     public String getKitchenType() {
