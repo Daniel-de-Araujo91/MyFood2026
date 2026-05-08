@@ -1,11 +1,15 @@
 package br.ufal.ic.myfood.models.manegers.order;
 
 import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
+import br.ufal.ic.myfood.exceptions.delivery.NotExistDeliveryException;
 import br.ufal.ic.myfood.exceptions.order.*;
+import br.ufal.ic.myfood.exceptions.user.deliverer.DelivererUnregistedInEntrepriseException;
+import br.ufal.ic.myfood.exceptions.user.deliverer.UserIsNotDeliverer;
 import br.ufal.ic.myfood.models.data.enterprise.EnterpriseDataBase;
 import br.ufal.ic.myfood.models.data.order.OrderDataBase;
 import br.ufal.ic.myfood.models.data.product.ProductDataBase;
 import br.ufal.ic.myfood.models.data.user.UserDataBase;
+import br.ufal.ic.myfood.models.data.user.deliverer.DelivererDataBase;
 import br.ufal.ic.myfood.models.entity.order.Order;
 
 
@@ -59,7 +63,7 @@ public class OrderManeger {
 
     }
 
-    public static String getOrder(String oid, String attribute) throws Exception{
+    public static String getOrderDoneByDeliverer(String oid, String attribute) throws Exception{
         if(attribute == null || attribute.isEmpty()){
             throw new InvalidOrderAttributeException();
         }
@@ -113,8 +117,80 @@ public class OrderManeger {
         oldValue -= newValue;
         oldValue = Math.round(oldValue * 100.0) / 100.0;
         OrderDataBase.editValue(oid, String.format("%.2f", oldValue).replace(",", "."), "valor" );
+    }
 
+    public static void releaseOrder(String oid) throws Exception{
+        try {
+            OrderDataBase.searchBase("numero", oid, "numero", 0 , "attribute");
+        }catch(DataNotFoundException e){
+            throw new OrderNotFoundException();
+        }
 
+        if(OrderDataBase.searchBase( "numero", oid, "estado", 0 ,"attribute").equals("pronto")){
+            throw new OrderAlreadyReleasedException();
+        }
+
+        if(OrderDataBase.searchBase( "numero", oid, "estado", 0 ,"attribute").equals("aberto")){
+            throw new OrderStatusIsOpenExxception();
+        }
+
+        OrderDataBase.editValue(oid,"pronto", "estado" );
+
+        String enterpriseId =OrderDataBase.searchBase("numero", oid, "empresa", 0 ,"attribute");
+
+        EnterpriseDataBase.addOrderDoneToEnterprise(enterpriseId, oid);
+        try {
+            String delivererBlock = EnterpriseDataBase.searchBase("eid", enterpriseId, "entregador", 0, "attribute");
+
+            delivererBlock = delivererBlock.replace("[", "").replace("]", "");
+
+            String[] deliverersList = delivererBlock.split(", ");
+
+            for (String delivererEmail : deliverersList) {
+                String delivererId = DelivererDataBase.searchBase("email", delivererEmail, "id", 0, "attribute");
+
+                if (EnterpriseDataBase.searchBase("eid", enterpriseId, "tipoEmpresa", 0, "attribute").equals("farmacia")) {
+                    DelivererDataBase.editDelivererDataBase(delivererId, oid, "pedidosFarmacia");
+                } else {
+                    DelivererDataBase.editDelivererDataBase(delivererId, oid, "pedidos");
+                }
+            }
+
+        }catch (DataNotFoundException e){}
+    }
+
+    public static String getOrderDoneByDeliverer(String delivererId) throws Exception{
+        try{
+            if (!UserDataBase.searchBase("id", delivererId, "veiculo", 0, "attribute").isBlank() || !UserDataBase.searchBase("id", delivererId, "placa", 0, "attribute").isBlank());
+        }catch (DataNotFoundException e){
+            throw new UserIsNotDeliverer();
+        }
+
+        if(UserDataBase.searchBase("id", delivererId, "empresas", 0, "attribute").equals("[]")){
+            throw new DelivererUnregistedInEntrepriseException();
+        }
+
+        if(DelivererDataBase.searchBase( "id", delivererId, "pedidosFarmacia", 0, "attribute").equals("[]") && DelivererDataBase.searchBase( "id", delivererId, "pedidos", 0, "attribute").equals("[]")){
+            throw new NotExistDeliveryException();
+        }
+
+        String orderPharmacy =DelivererDataBase.searchBase( "id", delivererId, "pedidosFarmacia", 0, "attribute");
+        if(orderPharmacy.equals("[]")){
+            String orderBlock = DelivererDataBase.searchBase( "id", delivererId, "pedidos", 0, "attribute");
+
+            orderBlock = orderBlock.replace("[", "").replace("]", "");
+
+            String[] deliverersList = orderBlock.split(", ");
+
+            return deliverersList[0];
+        }
+        else{
+            orderPharmacy = orderPharmacy.replace("[", "").replace("]", "");
+
+            String[] deliverersList = orderPharmacy.split(", ");
+
+            return deliverersList[0];
+        }
 
     }
 }

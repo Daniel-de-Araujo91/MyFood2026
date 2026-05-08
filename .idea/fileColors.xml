@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SharedFileColors">
+    <fileColor scope="modelsManeger" color="2d4765" />
+    <fileColor scope="modelsEntity" color="344b36" />
+    <fileColor scope="modelsData" color="5c4d33" />
+    <fileColor scope="Exception" color="593a3a" />
+  </component>
+</project>

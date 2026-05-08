@@ -12,7 +12,7 @@ public class MarketDataBase extends EnterpriseDataBase {
     public static void addToBase(String eid, Market marketUnregisted) throws Exception{
         String content  = EntepriseReadAll();
 
-        String newRegister = "    { \"eid\": \"" + eid + "\", \"tipoEmpresa\": \"" + marketUnregisted.getEnterpriseType() + "\", \"dono\": \"" + marketUnregisted.getOwner() + "\", \"nome\": \"" + marketUnregisted.getName() + "\", \"endereco\": \"" + marketUnregisted.getAddress() + "\", \"abre\": \"" + marketUnregisted.getOpenHour() +  "\", \"fecha\": \"" + marketUnregisted.getClouseHour() +"\", \"tipoMercado\": \"" + marketUnregisted.getMarketType() +"\" }";
+        String newRegister = "    { \"eid\": \"" + eid + "\", \"tipoEmpresa\": \"" + marketUnregisted.getEnterpriseType() + "\", \"dono\": \"" + marketUnregisted.getOwner() + "\", \"nome\": \"" + marketUnregisted.getName() + "\", \"endereco\": \"" + marketUnregisted.getAddress() + "\", \"abre\": \"" + marketUnregisted.getOpenHour() +  "\", \"fecha\": \"" + marketUnregisted.getClouseHour() +"\", \"tipoMercado\": \"" + marketUnregisted.getMarketType() + "\", \"entregador\": \"" + marketUnregisted.getDeliverers() + "\", \"pedidos\": \"" + marketUnregisted.getOrderDone() +"\" }";
 
         addToBase(content,newRegister, EnterpriseDataBase.getArquive());
     }

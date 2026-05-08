@@ -12,7 +12,7 @@ public class PharmacyDataBase extends EnterpriseDataBase {
     public static void addToBase(String eid, Pharmacy pharmacyUnregisted) throws Exception{
         String content  = EntepriseReadAll();
 
-        String newRegister = "    { \"eid\": \"" + eid + "\", \"tipoEmpresa\": \"" + pharmacyUnregisted.getEnterpriseType() + "\", \"dono\": \"" + pharmacyUnregisted.getOwner() + "\", \"nome\": \"" + pharmacyUnregisted.getName() + "\", \"endereco\": \"" + pharmacyUnregisted.getAddress() + "\", \"aberto24Horas\": \"" + pharmacyUnregisted.getOpen24h() +  "\", \"numeroFuncionarios\": \"" + pharmacyUnregisted.getNumberOfEmployees()+"\" }";
+        String newRegister = "    { \"eid\": \"" + eid + "\", \"tipoEmpresa\": \"" + pharmacyUnregisted.getEnterpriseType() + "\", \"dono\": \"" + pharmacyUnregisted.getOwner() + "\", \"nome\": \"" + pharmacyUnregisted.getName() + "\", \"endereco\": \"" + pharmacyUnregisted.getAddress() + "\", \"aberto24Horas\": \"" + pharmacyUnregisted.getOpen24h() +  "\", \"numeroFuncionarios\": \"" + pharmacyUnregisted.getNumberOfEmployees()+ "\", \"entregador\": \"" + pharmacyUnregisted.getDeliverers() + "\", \"pedidos\": \"" + pharmacyUnregisted.getOrderDone() +"\" }";
 
         addToBase(content,newRegister, EnterpriseDataBase.getArquive());
     }

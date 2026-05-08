@@ -189,7 +189,7 @@ expectError "Atributo invalido" getEntrega id=${en1} atributo=""
 expectError "Atributo nao existe" getEntrega id=${en1} atributo="local"
 
 expect "Carlos"  getEntrega id=${en1} atributo="cliente"
-expect "Farmacia"  getEntrega id=${en1} atributo="empresa"
+expect "Farmacia"  getEntrega id=${en1} atributo="empresa"en
 expect ${pe3}  getEntrega id=${en1} atributo="pedido"
 expect "Rodrigo"  getEntrega id=${en1} atributo="entregador"
 expect "Rua Exemplo N 123"  getEntrega id=${en1} atributo="destino"

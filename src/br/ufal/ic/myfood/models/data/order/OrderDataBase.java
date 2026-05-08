@@ -62,9 +62,9 @@ public class OrderDataBase extends DataBase {
         }
 
 
-        String newBlock = block.substring(0, endBrackets) + newInformation + block.substring(endBrackets) ;
+        String newBlock = block.substring(0, endBrackets) + newInformation + block.substring(endBrackets)  ;
 
-        String newContent = content.substring(0, beginBlock) + newBlock + content.substring(endBlock);
+        String newContent = content.substring(0, beginBlock)  + newBlock + content.substring(endBlock);
 
         createDataBase(newContent,Arquive);
     }
@@ -97,7 +97,7 @@ public class OrderDataBase extends DataBase {
         String value = "\"" + newValue + "\"";
 
 
-        String newBlock = block.substring(0, begin) + newValue + block.substring(end) ;
+        String newBlock =  block.substring(0, begin) + newValue + block.substring(end) ;
 
         String newContent = content.substring(0, beginBlock) + newBlock + content.substring(endBlock);
 
@@ -206,4 +206,6 @@ public class OrderDataBase extends DataBase {
 
         return searchBase("cliente", userId, "numero", searchStart, "attribute");
     }
+
+
 }

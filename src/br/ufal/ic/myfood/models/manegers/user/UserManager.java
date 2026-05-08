@@ -3,47 +3,86 @@ package br.ufal.ic.myfood.models.manegers.user;
 import br.ufal.ic.myfood.exceptions.data.DataNotFoundException;
 import br.ufal.ic.myfood.exceptions.user.*;
 import br.ufal.ic.myfood.models.data.user.UserDataBase;
+import br.ufal.ic.myfood.models.data.user.deliverer.DelivererDataBase;
+import br.ufal.ic.myfood.models.data.user.owner.OwnerDataBase;
 import br.ufal.ic.myfood.models.entity.user.User;
+import br.ufal.ic.myfood.models.entity.user.deliverer.Deliverer;
+import br.ufal.ic.myfood.models.entity.user.owner.Owner;
+import br.ufal.ic.myfood.models.manegers.user.deliverer.DelivererManager;
 
 import java.util.UUID;
 
 public class UserManager {
     private String id;
 
+    /**Create Owner**/
     public UserManager(String name, String email, String password, String address, String cpf) throws Exception {
         checkData(name, email, password, address, cpf);
         if(cpf == null || cpf.isBlank()){
             throw new InvalidCpfFormatException();
         }
-        criarUsuario(name, email, password, address, cpf);
+        createUser(name, email, password, address, cpf);
     }
-    public UserManager(String name, String email, String password, String address) throws Exception {
-        checkData(name, email, password, address, null);
-        criarUsuario(name, email, password, address, null);
-
-
-    }
-
-    public static String getAtributoUsuario (String id, String atributo) throws Exception{
-        try{
-            return UserDataBase.searchBase("id", id, atributo, 0,"attribute");
-        }catch(DataNotFoundException e){
-            throw new UserNotRegisteredException();
-        }
-
-    }
-
-    public void criarUsuario(String name, String email, String password, String address,String cpf) throws Exception{
+    public void createUser(String name, String email, String password, String address, String cpf) throws Exception{
         try{
             UserDataBase.searchBase("email", email,"email", 0,"attribute");
             throw new EmailRegisteredException();
 
         } catch (DataNotFoundException e){
             this.id = UUID.randomUUID().toString();
-            User newUser = new User(name, email, password, address, cpf);
+            Owner newUser = new Owner(name, email, password, address, cpf);
+            OwnerDataBase.addUserBase(id, newUser);
+        }
+    }
+
+    /**Create User**/
+    public UserManager(String name, String email, String password, String address) throws Exception {
+        checkData(name, email, password, address, null);
+        createUser(name, email, password, address);
+    }
+
+    public void createUser(String name, String email, String password, String address) throws Exception{
+        try{
+            UserDataBase.searchBase("email", email,"email", 0,"attribute");
+            throw new EmailRegisteredException();
+
+        } catch (DataNotFoundException e){
+            this.id = UUID.randomUUID().toString();
+            User newUser = new User(name, email, password, address);
             UserDataBase.addUserBase(id, newUser);
         }
     }
+    /**Create Deliverer**/
+    public UserManager(String name, String email, String password, String address, String vehicle, String plate) throws Exception {
+        DelivererManager.checkData(vehicle, plate);
+        checkData(name, email, password, address, null);
+        createUser(name, email, password, address, vehicle, plate);
+    }
+
+    public void createUser(String name, String email, String password, String address, String vehicle, String plate) throws Exception{
+        try{
+            UserDataBase.searchBase("email", email,"email", 0,"attribute");
+            throw new EmailRegisteredException();
+
+        } catch (DataNotFoundException e){
+            this.id = UUID.randomUUID().toString();
+            Deliverer newUser = new Deliverer(name, email, password, address, vehicle, plate);
+            DelivererDataBase.addUserBase(id, newUser);
+        }
+    }
+
+
+    public static String getAtributoUsuario (String id, String attribute) throws Exception{
+        try{
+            return UserDataBase.searchBase("id", id, attribute, 0,"attribute");
+        }catch(DataNotFoundException e){
+            throw new UserNotRegisteredException();
+        }
+
+    }
+
+
+
 
 
     public static String login(String email, String password) throws Exception {

@@ -124,10 +124,10 @@ public class EnterpriseManager {
 
     private static void checkRequirement(String owner, String name, String address) throws Exception {
         try{
-            if(UserDataBase.searchBase("id", owner, "cpf", 0,"attribute").equals("null")){
-                throw new NotOwnerException();
-            }
-        }catch(DataNotFoundException e){}
+            if(UserDataBase.searchBase("id", owner, "cpf", 0,"attribute").equals("null"));
+        }catch(DataNotFoundException e){
+            throw new NotOwnerException();
+        }
 
         try{
             if(!owner.equals(EnterpriseDataBase.searchBase("nome", name, "dono", 0, "attribute"))){

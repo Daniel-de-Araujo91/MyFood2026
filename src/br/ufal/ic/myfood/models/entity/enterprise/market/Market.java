@@ -7,6 +7,7 @@ public class Market extends Enterprise {
     private String closeHour;
     private String marketType;
 
+
     public Market(String enterpriseType, String owner, String name, String address, String openHour, String closeHour, String marketType) {
         super(enterpriseType, owner, name, address);
         this.openHour = openHour;

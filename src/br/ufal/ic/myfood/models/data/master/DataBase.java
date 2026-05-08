@@ -43,10 +43,10 @@ public class DataBase {
 
     }
 
-    public static String informationExtraction(String block, String resultLocation) {
+    public static String informationExtraction(String block, String resultLocation) throws Exception {
         int indexLocation = block.indexOf("\"" + resultLocation + "\"");
         if(indexLocation == -1){
-            return "";
+            throw new DataNotFoundException();
         }
         int after = block.indexOf(":", indexLocation) +1;
         while(block.charAt(after) == ' ') after++;

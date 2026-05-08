@@ -10,6 +10,7 @@ import br.ufal.ic.myfood.exceptions.enterprise.NotOwnerException;
 import br.ufal.ic.myfood.exceptions.user.InvalidNameException;
 import br.ufal.ic.myfood.models.data.master.DataBase;
 import br.ufal.ic.myfood.models.data.user.UserDataBase;
+import br.ufal.ic.myfood.models.data.user.deliverer.DelivererDataBase;
 
 public class EnterpriseDataBase extends DataBase {
 
@@ -42,7 +43,10 @@ public class EnterpriseDataBase extends DataBase {
 
 
     public static String getEnterpriseByUser(String id) throws Exception {
-        if(UserDataBase.searchBase("id", id, "cpf", 0, "attribute").equals("null")){
+
+        try {
+            if(UserDataBase.searchBase("id", id, "cpf", 0, "attribute").equals("null"));
+        }catch (DataNotFoundException e){
             throw new NotOwnerException();
         }
 
@@ -159,5 +163,95 @@ public class EnterpriseDataBase extends DataBase {
         String newContent = content.substring(0, beginBlock) + newBlock + content.substring(endBlock);
 
         createDataBase(newContent,Arquive);
+    }
+
+    public static void addDelivererToEnterprise(String eid, String newDeliverer) throws Exception{
+        String content =  EntepriseReadAll();
+
+        String target = "\"" + eid + "\"";
+        int indexId = content.indexOf(target);
+        if(indexId == -1){
+            throw  new DataNotFoundException();
+        }
+
+        int beginBlock = content.lastIndexOf("{",  indexId);
+        int endBlock = content.indexOf("}",  indexId);
+        String block = content.substring(beginBlock, endBlock);
+
+        int indexLocation = block.indexOf("\"" + "entregador"+ "\"");
+
+        int beginBrackets = block.indexOf("[", indexLocation);
+        int endBrackets = block.indexOf("]", beginBrackets);
+
+        String insideList = block.substring(beginBrackets+1, endBrackets).trim();
+
+        String newDelivererEmail = UserDataBase.searchBase("id", newDeliverer, "email", 0, "attribute");;
+        String newInformation;
+        if(insideList.isEmpty()){
+            newInformation =  newDelivererEmail;
+        }else{
+            newInformation = ", " + newDelivererEmail;
+        }
+
+
+        String newBlock = block.substring(0, endBrackets) + newInformation + block.substring(endBrackets) ;
+
+        String newContent = content.substring(0, beginBlock) + newBlock + content.substring(endBlock);
+
+        createDataBase(newContent,Arquive);
+
+        String deliverEnterprises = "";
+        deliverEnterprises +=  "[" + informationExtraction(block, "nome")+", ";
+        deliverEnterprises += informationExtraction(block, "endereco") +"]";
+
+        DelivererDataBase.editDelivererDataBase(newDeliverer, deliverEnterprises, "empresas");
+
+        String orderDoneList = EnterpriseDataBase.searchBase("eid", eid, "pedidos", 0, "attribute");
+        orderDoneList = orderDoneList.replace("[", "").replace("]", "");
+        if(EnterpriseDataBase.searchBase("eid", eid, "tipoEmpresa", 0, "attribute").equals("farmacia")){
+            DelivererDataBase.editDelivererDataBase(newDeliverer, orderDoneList, "pedidosFarmacia");
+        }
+        else {
+            DelivererDataBase.editDelivererDataBase(newDeliverer, orderDoneList, "pedidos");
+        }
+
+    }
+
+    public static void addOrderDoneToEnterprise(String eid, String orderDone) throws Exception{
+        String content =  EntepriseReadAll();
+
+        String target = "\"" + eid + "\"";
+        int indexId = content.indexOf(target);
+        if(indexId == -1){
+            throw  new DataNotFoundException();
+        }
+
+        int beginBlock = content.lastIndexOf("{",  indexId);
+        int endBlock = content.indexOf("}",  indexId);
+        String block = content.substring(beginBlock, endBlock);
+
+        int indexLocation = block.indexOf("\"" + "pedidos"+ "\"");
+
+        int beginBrackets = block.indexOf("[", indexLocation);
+        int endBrackets = block.indexOf("]", beginBrackets);
+
+        String insideList = block.substring(beginBrackets+1, endBrackets).trim();
+
+
+        String newInformation;
+        if(insideList.isEmpty()){
+            newInformation =  orderDone;
+        }else{
+            newInformation = ", " + orderDone;
+        }
+
+
+        String newBlock = block.substring(0, endBrackets) + newInformation + block.substring(endBrackets) ;
+
+        String newContent = content.substring(0, beginBlock) + newBlock + content.substring(endBlock);
+
+        createDataBase(newContent,Arquive);
+
+
     }
 }

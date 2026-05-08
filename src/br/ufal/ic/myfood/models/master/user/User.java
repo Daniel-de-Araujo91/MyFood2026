@@ -1,17 +1,18 @@
-package br.ufal.ic.myfood.models.entity.user;
+package br.ufal.ic.myfood.models.master.user;
 
 public class User {
-    protected String name;
-    protected String email;
-    protected String password;
-    protected String address;
+    private String name;
+    private String email;
+    private String password;
+    private String address;
+    private String cpf;
 
-
-    public User(String name, String email, String password, String address) {
+    public User(String name, String email, String password, String address, String cpf) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.address = address;
+        this.cpf = cpf;
     }
 
     public String getName() {
@@ -30,4 +31,7 @@ public class User {
         return address;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
 }

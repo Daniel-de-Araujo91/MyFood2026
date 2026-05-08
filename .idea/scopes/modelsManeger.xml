@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="modelsManeger" pattern="src:br.ufal.ic.myfood.models.manegers..*" />
+</component>

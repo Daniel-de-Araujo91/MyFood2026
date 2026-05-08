@@ -11,7 +11,7 @@ public class RestaurantDataBase extends EnterpriseDataBase {
     public static void addToBase(String eid, Restaurant restaurantUnregisted) throws Exception{
         String content  = EntepriseReadAll();
 
-        String newRegister = "    { \"eid\": \"" + eid + "\", \"tipoEmpresa\": \"" + restaurantUnregisted.getEnterpriseType() + "\", \"dono\": \"" + restaurantUnregisted.getOwner() + "\", \"nome\": \"" + restaurantUnregisted.getName() + "\", \"endereco\": \"" + restaurantUnregisted.getAddress() + "\", \"tipoCozinha\": \"" + restaurantUnregisted.getKitchenType() +"\" }";
+        String newRegister = "    { \"eid\": \"" + eid + "\", \"tipoEmpresa\": \"" + restaurantUnregisted.getEnterpriseType() + "\", \"dono\": \"" + restaurantUnregisted.getOwner() + "\", \"nome\": \"" + restaurantUnregisted.getName() + "\", \"endereco\": \"" + restaurantUnregisted.getAddress() + "\", \"tipoCozinha\": \"" + restaurantUnregisted.getKitchenType() + "\", \"entregador\": \"" + restaurantUnregisted.getDeliverers() + "\", \"pedidos\": \"" + restaurantUnregisted.getOrderDone() +"\" }";
 
         addToBase(content,newRegister, EnterpriseDataBase.getArquive());
     }
